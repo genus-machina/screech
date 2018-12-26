@@ -70,3 +70,18 @@ function testInputEventHandlers ({ event }) {
 
 testInputEventHandlers({event: InputEvent.Activation});
 testInputEventHandlers({event: InputEvent.Deactivation});
+
+test('output devices can have aliases', async t => {
+  const {manager} = t.context;
+  const device1 = createMockOutputDevice('one');
+  const device2 = createMockOutputDevice('two');
+
+  manager.addDevice(device1);
+  manager.addDevice(device2);
+  manager.createAlias('alias', device1.name);
+  manager.createAlias('alias', device2.name);
+  manager.activate('alias');
+
+  sinon.assert.calledOnce(device1.on as sinon.SinonSpy);
+  sinon.assert.calledOnce(device2.on as sinon.SinonSpy);
+});

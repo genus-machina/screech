@@ -56,8 +56,8 @@
     "lines": 100,
     "statements": 100,
     "exclude": [
-      "dist/**/*.js",
-      "test/**/*.ts"
+      "dist/**/*",
+      "test/**/*"
     ],
     "extension": [
       ".ts"

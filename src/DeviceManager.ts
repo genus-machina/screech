@@ -32,6 +32,17 @@ export class DeviceManager {
     }
   }
 
+  public createAlias (alias : string, name : string) : void {
+    const sources = this.getOutputDevices(name);
+    const targets = this.outputs.get(alias) || new Set<OutputDevice>();
+
+    for (const device of sources) {
+      targets.add(device);
+    }
+
+    this.outputs.set(alias, targets);
+  }
+
   public async deactivate (name : string) : Promise<void> {
     const devices = this.getOutputDevices(name);
     await Promise.all(Array.from(devices, device => device.off()));
