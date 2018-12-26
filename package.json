@@ -1,6 +1,6 @@
 {
   "name": "@genus-machina/screech",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Raspberry Pi utilities",
   "main": "dist/index.js",
   "scripts": {
