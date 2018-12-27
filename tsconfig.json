@@ -4,8 +4,11 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "dist/",
-    "strictNullChecks": true,
+    "strict": true,
     "target": "es6"
   },
   "include": [

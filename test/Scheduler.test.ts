@@ -4,8 +4,6 @@ import SunCalc from 'suncalc';
 import sinon from 'sinon';
 import {useSandbox} from './helpers/sandbox';
 
-const ONE_DAY = 24 * 60 * 60 * 1000;
-
 interface Context {
   config : SchedulerConfig;
   sandbox : sinon.SinonSandbox;
@@ -54,9 +52,9 @@ test.serial('#at fails if the time is in the past', t => {
 test.serial('#next returns the next occurence of the named time', t => {
   const {config, sandbox, scheduler} = t.context;
 
-  const now = new Date('2018-12-25T12:00:00Z');
-  const clock = sandbox.useFakeTimers(now.getTime());
   const getTimes = sandbox.spy(SunCalc, 'getTimes');
+  const now = new Date('2018-12-25T12:00:00Z');
+  sandbox.useFakeTimers(now.getTime());
 
   const dawn = scheduler.next(NamedTime.Dawn);
   const dusk = scheduler.next(NamedTime.Dusk);
@@ -89,7 +87,7 @@ test.serial('#next returns the next occurrence of a specific time', t => {
 
   const now = new Date('2018-12-25T12:00:00Z');
   const tomorrow = new Date('2018-12-26T00:00:00Z');
-  const clock = sandbox.useFakeTimers(now.getTime());
+  sandbox.useFakeTimers(now.getTime());
 
   const morning = scheduler.next(Time.parse('07:00'));
   const night = scheduler.next(Time.parse('19:00'));

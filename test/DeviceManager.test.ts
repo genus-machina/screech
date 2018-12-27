@@ -1,4 +1,5 @@
 import anyTest, {TestInterface} from 'ava';
+import get from 'lodash/get';
 import sinon from 'sinon';
 import {v4 as uuid} from 'uuid';
 import {createGenericDevice, createMockInputDevice, createMockOutputDevice, getInputEventHandler} from './helpers/devices';
@@ -24,10 +25,11 @@ test('only input and output devices can be added to a manager', t => {
   t.notThrows(() => manager.addDevice(output));
 });
 
-function testOutputDeviceOperation ({ action, method }) {
+function testOutputDeviceOperation ({action, method} : {action : string, method : string}) {
   test(`calling ${method} on a non-existant device fails`, async t => {
     const {manager} = t.context;
-    await t.throwsAsync(manager[method](uuid()), /no output device/i);
+    const invoke = get(manager, method).bind(manager);
+    await t.throwsAsync(invoke(uuid()), /no output device/i);
   });
 
   test(`${method} turns all devices by that name ${action}`, async t => {
@@ -39,20 +41,22 @@ function testOutputDeviceOperation ({ action, method }) {
     manager.addDevice(device1);
     manager.addDevice(device2);
     manager.addDevice(device3);
-    await manager[method]('duplicate');
 
-    sinon.assert.calledOnce(device1[action]);
-    sinon.assert.calledWithExactly(device1[action]);
-    sinon.assert.notCalled(device2[action]);
-    sinon.assert.calledOnce(device3[action]);
-    sinon.assert.calledWithExactly(device3[action]);
+    const invoke = get(manager, method).bind(manager);
+    await invoke('duplicate');
+
+    sinon.assert.calledOnce(get(device1, action));
+    sinon.assert.calledWithExactly(get(device1, action));
+    sinon.assert.notCalled(get(device2, action));
+    sinon.assert.calledOnce(get(device3, action));
+    sinon.assert.calledWithExactly(get(device3, action));
   });
 }
 
 testOutputDeviceOperation({ action: 'on', method: 'activate' });
 testOutputDeviceOperation({ action: 'off', method: 'deactivate' });
 
-function testInputEventHandlers ({ event }) {
+function testInputEventHandlers ({event} : {event : InputEvent}) {
   test(`${event} events are forwarded from input devices`, async t => {
     const {manager} = t.context;
     const device = createMockInputDevice('input');

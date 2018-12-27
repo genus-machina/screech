@@ -1,12 +1,10 @@
 import {TestInterface} from 'ava';
-import random from 'lodash/random';
-import {v4 as uuid} from 'uuid';
 import {Device, DeviceConfig} from '../../../src';
 
 type DeviceFactory = (config : DeviceConfig) => Device;
 type DeviceTest = TestInterface<DeviceConfig>;
 
-export function testDeviceInterface (test, deviceFactory : DeviceFactory) : void {
+export function testDeviceInterface (test : DeviceTest, deviceFactory : DeviceFactory) : void {
   test.serial('is a Device', t => {
     const {name, port} = t.context;
     const device = deviceFactory({name, port});

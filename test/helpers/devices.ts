@@ -1,4 +1,3 @@
-import assert from 'assert';
 import random from 'lodash/random';
 import sinon from 'sinon';
 import {v4 as uuid} from 'uuid';

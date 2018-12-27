@@ -1,4 +1,5 @@
 import assert from 'assert';
+import {TestInterface} from 'ava';
 import onoff from 'onoff';
 import sinon from 'sinon';
 import {InterruptValue}  from '../../../src';
@@ -12,7 +13,7 @@ export interface GpioTest extends SandboxTest {
   GpioStub: sinon.SinonStub;
 }
 
-export function useGpio (test) {
+export function useGpio (test : TestInterface<GpioTest>) {
   useSandbox(test);
 
   test.beforeEach(t => {
@@ -34,7 +35,8 @@ export function useGpio (test) {
 
     t.context.getInterruptHandler = function getInterruptHandler () : InterruptHandler {
       const device = t.context.getDevice();
-      return device.watch.args[0][0];
+      const watch = device.watch as sinon.SinonSpy;
+      return watch.args[0][0];
     };
   });
 }

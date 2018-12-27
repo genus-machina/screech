@@ -16,6 +16,7 @@ export abstract class Device {
   constructor (options : DeviceConfig) {
     assert(NAME_PATTERN.test(options.name), 'name must be an alphanumeric string');
     this.id = uuid();
-    Object.assign(this, options);
+    this.name = options.name;
+    this.port = options.port;
   }
 }

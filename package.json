@@ -20,6 +20,7 @@
     "@types/lodash": "^4.14.117",
     "@types/onoff": "^3.2.1",
     "@types/sinon": "^7.0.2",
+    "@types/suncalc": "^1.8.0",
     "@types/uuid": "^3.4.4",
     "ava": "^1.0.0-rc.1",
     "nyc": "^13.1.0",
