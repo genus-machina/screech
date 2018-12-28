@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {createSocket, Socket} from 'dgram';
+import {createSocket, RemoteInfo, Socket} from 'dgram';
 import {EventEmitter} from 'events';
 import {AddressInfo} from 'net';
 
@@ -35,7 +35,7 @@ export class Channel extends EventEmitter {
       reuseAddr: true
     });
 
-    this.socket.on('message', (data) => this.receive(data));
+    this.socket.on('message', (data, info) => this.receive(data, info));
     this.socket.on('error', (error) => this.emit('error', error));
 
     return new Promise<void>(resolve => {
@@ -43,7 +43,6 @@ export class Channel extends EventEmitter {
       socket.bind(this.config.port, () => {
         const address = socket.address() as AddressInfo;
         this.config.port = address.port;
-        socket.setBroadcast(true);
         resolve();
       });
     });
@@ -53,7 +52,7 @@ export class Channel extends EventEmitter {
     return this.config.port;
   }
 
-  private receive (data : Buffer) {
+  private receive (data : Buffer, info : RemoteInfo) {
     let message;
 
     try {
@@ -63,7 +62,7 @@ export class Channel extends EventEmitter {
       this.emit('error', parseError);
     }
 
-    this.emit('message', message);
+    this.emit('message', message, info);
   }
 
   send (message : object) {

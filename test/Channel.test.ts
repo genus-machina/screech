@@ -39,8 +39,16 @@ test('a channel can send/receive messages', async t => {
   const message = {content: 'hello!'};
 
   const promise = new Promise<void>(resolve => {
-    right.on('message', received => {
+    right.on('message', (received, info) => {
+      const expectedInfo = {
+        address: '127.0.0.1',
+        family: 'IPv4',
+        port: left.port(),
+        size: JSON.stringify(message).length
+      };
+
       t.deepEqual(received, message);
+      t.deepEqual(info, expectedInfo);
       resolve();
     });
   });
