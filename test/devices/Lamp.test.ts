@@ -28,5 +28,5 @@ test.serial('instantiating a lamp initializes the port', t => {
 
   const config = {activeLow: true};
   sinon.assert.calledOnce(GpioStub);
-  sinon.assert.calledWithExactly(GpioStub, port, 'out', config);
+  sinon.assert.calledWithExactly(GpioStub, port, 'high', config);
 });

@@ -17,7 +17,7 @@ export class InputDevice extends Device {
   constructor (options : DeviceConfig) {
     const {port} = options;
     super(options);
-    this.device = new Gpio(port, 'in');
+    this.device = new Gpio(port, 'in', 'both');
     this.device.watch(this.handleInterrupt.bind(this));
     this.handlers = new EventEmitter();
   }

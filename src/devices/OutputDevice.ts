@@ -13,7 +13,9 @@ export class OutputDevice extends Device {
     const {activeLow = false, port} = options;
     super(options);
 
-    const device = new Gpio(port, 'out', {activeLow});
+    // Initialize the output in the off state
+    const direction = activeLow ? 'high' : 'low';
+    const device = new Gpio(port, direction, {activeLow});
     this.write = promisify(device.write.bind(device));
   }
 

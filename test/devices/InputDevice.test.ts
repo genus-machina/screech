@@ -22,7 +22,7 @@ test.serial('instantiating a device initializes the port', t => {
   const {GpioStub, port} = t.context;
   createInputDevice(t.context);
   sinon.assert.calledOnce(GpioStub);
-  sinon.assert.calledWithExactly(GpioStub, port, 'in');
+  sinon.assert.calledWithExactly(GpioStub, port, 'in', 'both');
 });
 
 test.serial('instantiating a device sets up an interrupt handler', t => {

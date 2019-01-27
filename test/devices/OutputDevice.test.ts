@@ -28,7 +28,7 @@ test.serial('instantiating a device initializes the port', t => {
 
   const config = {activeLow: false};
   sinon.assert.calledOnce(GpioStub);
-  sinon.assert.calledWithExactly(GpioStub, port, 'out', config);
+  sinon.assert.calledWithExactly(GpioStub, port, 'low', config);
 });
 
 test.serial('a device can be configured with inverted logic', t => {
@@ -38,5 +38,5 @@ test.serial('a device can be configured with inverted logic', t => {
 
   const config = {activeLow: true};
   sinon.assert.calledOnce(GpioStub);
-  sinon.assert.calledWithExactly(GpioStub, port, 'out', config);
+  sinon.assert.calledWithExactly(GpioStub, port, 'high', config);
 });
