@@ -26,7 +26,7 @@ export class InputDevice extends Device {
     this.handlers.on(event, handler);
   }
 
-  private handleInterrupt (value : InterruptValue) : void {
+  private handleInterrupt (_ : Error | null, value : InterruptValue) : void {
     const event = value === 1 ? InputEvent.Activation : InputEvent.Deactivation;
     this.handlers.emit(event);
   }

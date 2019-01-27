@@ -45,7 +45,7 @@ test.serial('when a device is activated the activation handlers are invoked', t 
   device.on(InputEvent.Deactivation, deactivation);
 
   const handler = t.context.getInterruptHandler();
-  handler(1);
+  handler(null, 1);
 
   sinon.assert.calledOnce(activation1);
   sinon.assert.calledWithExactly(activation1);
@@ -65,7 +65,7 @@ test.serial('when a device is deactivated the deactivation handlers are invoked'
   device.on(InputEvent.Deactivation, deactivation2);
 
   const handler = t.context.getInterruptHandler();
-  handler(0);
+  handler(null, 0);
 
   sinon.assert.notCalled(activation);
   sinon.assert.calledOnce(deactivation1);

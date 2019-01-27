@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import {InterruptValue}  from '../../../src';
 import {SandboxTest, useSandbox} from '../../helpers/sandbox';
 
-type InterruptHandler = (value : InterruptValue) => void;
+type InterruptHandler = (error : Error | null, value : InterruptValue) => void;
 
 export interface GpioTest extends SandboxTest {
   getDevice : () => onoff.Gpio;
